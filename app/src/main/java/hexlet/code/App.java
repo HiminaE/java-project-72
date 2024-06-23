@@ -3,9 +3,28 @@
  */
 package hexlet.code;
 
+//import com.zaxxer.hikari.HikariConfig;
+//import com.zaxxer.hikari.HikariDataSource;
+import gg.jte.resolve.ResourceCodeResolver;
+//import hexlet.code.controller.UrlController;
+//import hexlet.code.controller.UrlCheckController;
+//import hexlet.code.utils.Paths;
+//import hexlet.code.repository.BaseRepository;
 import io.javalin.Javalin;
+import lombok.extern.slf4j.Slf4j;
+
+import gg.jte.ContentType;
+import gg.jte.TemplateEngine;
 import io.javalin.rendering.template.JavalinJte;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
+import java.util.stream.Collectors;
+
+@Slf4j
 public class App {
     private static int getPort() {
         String port = System.getenv().getOrDefault("PORT", "7070");
@@ -19,8 +38,9 @@ public class App {
         return app;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException, IOException {
         Javalin app = getApp();
+        app.get("/", ctx -> ctx.result("Hello World"));
         app.start(getPort());
     }
 }
