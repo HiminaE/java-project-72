@@ -3,13 +3,13 @@
  */
 package hexlet.code;
 
-//import com.zaxxer.hikari.HikariConfig;
-//import com.zaxxer.hikari.HikariDataSource;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import gg.jte.resolve.ResourceCodeResolver;
-//import hexlet.code.controller.UrlController;
-//import hexlet.code.controller.UrlCheckController;
-//import hexlet.code.utils.Paths;
-//import hexlet.code.repository.BaseRepository;
+import hexlet.code.controller.UrlController;
+import hexlet.code.controller.UrlCheckController;
+import hexlet.code.utils.Paths;
+import hexlet.code.repository.BaseRepository;
 import io.javalin.Javalin;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,7 +35,30 @@ public class App {
             config.bundledPlugins.enableDevLogging();
             config.fileRenderer(new JavalinJte());
         });
+
+        app.before(ctx -> {
+            ctx.contentType("text/html; charset=utf-8");
+        });
+
+        app.get(Paths.rootPath(), UrlController::enterUrl);
+        app.post(Paths.urlsPath(), UrlController::addUrl);
+        app.get(Paths.urlsPath(), UrlController::showAddedUrls);
+        app.get(Paths.urlsIdPathWithoutId(), UrlController::showInfoAboutUrl);
+        app.post(Paths.urlsIdChecksPathWithoutId(), UrlCheckController::makeCheck);
         return app;
+    }
+
+    private static String readResourceFile(String fileName) throws IOException {
+        var inputStream = App.class.getClassLoader().getResourceAsStream(fileName);
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+            return reader.lines().collect(Collectors.joining("\n"));
+        }
+    }
+
+    private static TemplateEngine createTemplateEngine() {
+        ClassLoader classLoader = App.class.getClassLoader();
+        ResourceCodeResolver codeResolver = new ResourceCodeResolver("templates", classLoader);
+        return TemplateEngine.create(codeResolver, ContentType.Html);
     }
 
     public static void main(String[] args) throws SQLException, IOException {
