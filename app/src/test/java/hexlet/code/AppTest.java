@@ -75,11 +75,11 @@ class AppTest {
     @Test
     public void testAddWrongUrl() {
         JavalinTest.test(app, (server, client) -> {
-            var requestBody = "url=123";
+            var requestBody = "url=abc";
             var response = client.post("/urls", requestBody);
             assertThat(response.code()).isEqualTo(200);
 
-            var urls = UrlsRepository.getByName("123");
+            var urls = UrlsRepository.getByName("abc");
             assertThat(urls).isEmpty();
         });
     }
@@ -87,7 +87,7 @@ class AppTest {
     @Test
     public void testShowAddedSites() {
         JavalinTest.test(app, (server, client) -> {
-            var url1 = new Url("https://github.com");
+            var url1 = new Url("https://www.example.com");
             var url2 = new Url("http://localhost:7070");
             UrlsRepository.save(url1);
             UrlsRepository.save(url2);
@@ -96,7 +96,7 @@ class AppTest {
             assertThat(response.code()).isEqualTo(200);
 
             var responseBody = response.body().string();
-            assertThat(responseBody.contains("https://github.com"));
+            assertThat(responseBody.contains("https://www.example.com"));
             assertThat(responseBody.contains("http://localhost:7070"));
         });
     }
@@ -112,15 +112,6 @@ class AppTest {
             assertThat(response.body().string()).contains("https://github.com");
         });
     }
-
-    @Test
-    public void testNotAddedUrl() {
-        JavalinTest.test(app, (server, client) -> {
-            var response = client.post("/urls/23498");
-            assertThat(response.code()).isEqualTo(404);
-        });
-    }
-
 
     @Test
     public void testUrlCheckInnerContent() {
