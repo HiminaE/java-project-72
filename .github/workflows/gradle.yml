@@ -29,7 +29,7 @@ jobs:
         build-root-directory: app
     - uses: paambaati/codeclimate-action@v6.0.0
       env:
-        CC_TEST_REPORTER_ID: "ab51bf4bfa4b5c6ea7a1a4ca7898a0e94c826e2f9f41e1eb0495f7c7f2854121"
+        CC_TEST_REPORTER_ID: "018c75c05349d8e4318263f3e78ebe692916060fdf3ae10d71c35cdffa1d16f9"
         JACOCO_SOURCE_PATH: "${{github.workspace}}/app/src/main/java"
       with:
         coverageCommand: make -C app report
