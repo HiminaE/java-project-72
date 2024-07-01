@@ -31,7 +31,6 @@ ${content}
         <div class="text-center">
             Будь с 
             <a href="https://ru.hexlet.io" target="_blank">Hexlet</a>
-            !
         </div>
     </div>
 </footer>
