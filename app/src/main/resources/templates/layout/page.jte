@@ -1,4 +1,4 @@
-@import gg.jte.Content
+m@import gg.jte.Content
 @param Content content
 
 
@@ -29,8 +29,9 @@ ${content}
 <footer class="footer border-top py-3 mt-5 bg-light">
     <div class="container-xl">
         <div class="text-center">
-            created by
+            Будь с 
             <a href="https://ru.hexlet.io" target="_blank">Hexlet</a>
+            !
         </div>
     </div>
 </footer>
