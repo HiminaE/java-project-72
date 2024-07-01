@@ -13,9 +13,9 @@ content = @`
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
         </div>
     @endif
-    <div class="container text-center">
-        <div class="container-fluid bg-dark p-5">
-            <div class="row">
+    <div class="container-fluid bg-dark p-5">
+        <div class="container text-center">
+             <div class="row">
                 <div class="col">
                     <h1>Анализатор страниц</h1>
                 </div>
