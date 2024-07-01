@@ -104,12 +104,12 @@ class AppTest {
     @Test
     public void testShowSingleUrl() {
         JavalinTest.test(app, (server, client) -> {
-            var url = new Url("https://github.com");
+            var url = new Url("https://www.example.com");
             UrlsRepository.save(url);
             var response = client.get("/urls/" + url.getId());
 
             assertThat(response.code()).isEqualTo(200);
-            assertThat(response.body().string()).contains("https://github.com");
+            assertThat(response.body().string()).contains("https://www.example.com");
         });
     }
 
