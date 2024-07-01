@@ -138,5 +138,4 @@ class AppTest {
             assertThat(urlCheck.getDescription()).contains("Content");
         });
     }
-
 }
