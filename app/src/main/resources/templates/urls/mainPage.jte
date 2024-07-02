@@ -32,7 +32,7 @@ content = @`
                             </div>
                         </div>
                     </form>
-                    <p class="mt-2 mb-0 text-white">Пример: https://www.example.com</p>
+                    <p class="mt-2 mb-0 text-grey">Пример: https://www.example.com</p>
                 </div>
             </div>
         </div>
