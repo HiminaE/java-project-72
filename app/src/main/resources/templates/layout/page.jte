@@ -25,7 +25,9 @@
         </div>
     </div>
 </nav>
-${content}
+<main class="flex-grow-1">
+    ${content}
+</main>
 <footer class="footer border-top py-3 mt-5 bg-light">
     <div class="container-xl">
         <div class="text-center">
