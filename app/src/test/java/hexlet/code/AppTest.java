@@ -15,7 +15,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
@@ -24,7 +23,7 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 
 class AppTest {
-    Javalin app;
+    private static Javalin app;
     private static MockWebServer server;
 
     @BeforeEach
@@ -51,7 +50,7 @@ class AppTest {
 
     @Test
     public void testMainPage() {
-        JavalinTest.test(app, (server, client) -> {
+        JavalinTest.test(app, (srv, client) -> {
             var response = client.get("/");
             assertThat(response.code()).isEqualTo(200);
             assertThat(response.body().string()).contains("Анализатор страниц");
@@ -60,7 +59,7 @@ class AppTest {
 
     @Test
     public void testAddUri() {
-        JavalinTest.test(app, (server, client) -> {
+        JavalinTest.test(app, (srv, client) -> {
             var requestBody = "url=http://localhost:7070/abc";
             var response = client.post("/urls", requestBody);
             assertThat(response.code()).isEqualTo(200);
@@ -74,7 +73,7 @@ class AppTest {
 
     @Test
     public void testAddWrongUrl() {
-        JavalinTest.test(app, (server, client) -> {
+        JavalinTest.test(app, (srv, client) -> {
             var requestBody = "url=abc";
             var response = client.post("/urls", requestBody);
             assertThat(response.code()).isEqualTo(200);
@@ -86,7 +85,7 @@ class AppTest {
 
     @Test
     public void testShowAddedSites() {
-        JavalinTest.test(app, (server, client) -> {
+        JavalinTest.test(app, (srv, client) -> {
             var url1 = new Url("https://www.example.com");
             var url2 = new Url("http://localhost:7070");
             UrlsRepository.save(url1);
@@ -103,7 +102,7 @@ class AppTest {
 
     @Test
     public void testShowSingleUrl() {
-        JavalinTest.test(app, (server, client) -> {
+        JavalinTest.test(app, (srv, client) -> {
             var url = new Url("https://www.example.com");
             UrlsRepository.save(url);
             var response = client.get("/urls/" + url.getId());
@@ -116,7 +115,7 @@ class AppTest {
     @Test
     public void testUrlCheckInnerContent() {
         var baseUrl = server.url("/").toString();
-        JavalinTest.test(app, (server, client) -> {
+        JavalinTest.test(app, (srv, client) -> {
             var requestBody = "url=" + baseUrl;
             client.post("/urls", requestBody);
             client.post("/urls/1/checks");
