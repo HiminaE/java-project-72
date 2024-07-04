@@ -84,10 +84,10 @@ public class UrlChecksRepository extends BaseRepository {
             }
 
         }
-
         return result;
     }
 
+    @SneakyThrows
     public static Optional<UrlCheck> find(Long id) {
         var sql = "SELECT * FROM url_checks WHERE id = ?";
         try (var conn = dataSource.getConnection();
