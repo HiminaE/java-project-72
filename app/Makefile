@@ -1,15 +1,15 @@
 dev:
-		./gradlew run
+	./gradlew run
 clean:
-		./gradlew clean
+	./gradlew clean
 build:
-		./gradlew clean build
+	./gradlew clean build
 install:
-		./gradlew installDist
+	./gradlew installDist
 lint:
-		./gradlew checkstyleMain
+	./gradlew checkstyleMain
 test:
-		./gradlew test
+	./gradlew test
 
 report:
 	./gradlew jacocoTestReport
