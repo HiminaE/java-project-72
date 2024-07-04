@@ -4,14 +4,16 @@
 package hexlet.code;
 
 import hexlet.code.model.Url;
-//import hexlet.code.App;
 import hexlet.code.repository.UrlChecksRepository;
 import hexlet.code.repository.UrlsRepository;
 import io.javalin.Javalin;
 import io.javalin.testtools.JavalinTest;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -113,7 +115,7 @@ class AppTest {
     }
 
     @Test
-    public void testUrlCheckInnerContent()  throws SQLException{
+    public void testUrlCheckInnerContent()  throws SQLException {
         var baseUrl = server.url("/").toString();
         var actualUrl = new Url(baseUrl, new Timestamp(new Date().getTime()));
         UrlsRepository.save(actualUrl);
