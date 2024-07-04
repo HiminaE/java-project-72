@@ -4,16 +4,14 @@
 package hexlet.code;
 
 import hexlet.code.model.Url;
+//import hexlet.code.App;
 import hexlet.code.repository.UrlChecksRepository;
 import hexlet.code.repository.UrlsRepository;
 import io.javalin.Javalin;
 import io.javalin.testtools.JavalinTest;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,6 +19,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
 
 class AppTest {
     private static Javalin app;
@@ -113,16 +113,15 @@ class AppTest {
     }
 
     @Test
-    public void testUrlCheckInnerContent() {
+    public void testUrlCheckInnerContent()  throws SQLException{
         var baseUrl = server.url("/").toString();
+        var actualUrl = new Url(baseUrl, new Timestamp(new Date().getTime()));
+        UrlsRepository.save(actualUrl);
         JavalinTest.test(app, (srv, client) -> {
-            var requestBody = "url=" + baseUrl;
-            client.post("/urls", requestBody);
-            client.post("/urls/1/checks");
+            var response = client.post("/urls/" + actualUrl.getId() + "/checks");
+            assertThat(response.code()).isEqualTo(200);
 
-            var urlCheck = UrlChecksRepository.getUrlChecksByUrlId(1L).get(0);
-
-            assertThat(urlCheck.getStatusCode()).isEqualTo(200);
+            var urlCheck = UrlChecksRepository.find(actualUrl.getId()).orElseThrow();
             assertThat(urlCheck.getH1()).contains("H1");
             assertThat(urlCheck.getTitle()).contains("Title");
             assertThat(urlCheck.getDescription()).contains("Content");
