@@ -49,30 +49,13 @@ public class UrlController {
             ctx.sessionAttribute("flash", "Страница уже существует");
             ctx.sessionAttribute("flash-type", "info");
         } else {
-            Url newUrl = new Url(normalizedUrl);UrlsRepository.save(newUrl);
+            Url newUrl = new Url(normalizedUrl);
+            UrlsRepository.save(newUrl);
             ctx.sessionAttribute("flash", "Страница успешно добавлена");
             ctx.sessionAttribute("flash-type", "success");
         }
         ctx.redirect("/urls");
     }
-//        var uriParam = ctx.formParam("url");
-//        try {
-//            var site = new Url(parseUrl(uriParam));
-//            if (isExist(site)) {
-//                ctx.sessionAttribute("flash", "Страница уже существует");
-//                ctx.sessionAttribute("flashType", "error");
-//                ctx.redirect(Paths.rootPath());
-//            } else {
-//                UrlsRepository.save(site);
-//                ctx.sessionAttribute("flash", "Страница успешно добавлена");
-//                ctx.sessionAttribute("flashType", "success");
-//                ctx.redirect(Paths.urlsPath());
-//            }
-//        } catch (URISyntaxException | MalformedURLException | IllegalArgumentException e) {
-//            ctx.sessionAttribute("flash", "Некорректный URL");
-//            ctx.sessionAttribute("flashType", "error");
-//            ctx.redirect(Paths.rootPath());
-//        }
 
     public static void showAddedUrls(Context ctx) throws SQLException {
         var flash = ctx.consumeSessionAttribute("flash");
