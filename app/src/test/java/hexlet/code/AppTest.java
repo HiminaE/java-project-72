@@ -5,6 +5,7 @@ package hexlet.code;
 
 import hexlet.code.model.Url;
 import hexlet.code.repository.UrlChecksRepository;
+//import hexlet.code.repository.UrlsRepository;
 import hexlet.code.repository.UrlsRepository;
 import io.javalin.Javalin;
 import io.javalin.testtools.JavalinTest;
@@ -116,18 +117,26 @@ class AppTest {
 
     @Test
     public void testUrlCheckInnerContent()  throws SQLException {
-        var baseUrl = server.url("/").toString();
-        JavalinTest.test(app, (srv, client) -> {
-            var actualUrl = UrlsRepository.findByName(baseUrl).orElse(null);
+        String url = server.url("/").toString().replaceAll("/$", "");
+        JavalinTest.test(app, ((srv, client) -> {
+            var requestBody = "url=" + url;
+            assertThat(client.post("/urls", requestBody).code()).isEqualTo(200);
+
+            var actualUrl = UrlsRepository.findByName(url).orElse(null);
             client.post("/urls/" + actualUrl.getId() + "/checks");
-
-            var urlCheck = UrlChecksRepository.getUrlChecksByUrlId(1L).get(0);
-
-            assertThat(urlCheck.getStatusCode()).isEqualTo(200);
-            assertThat(urlCheck.getH1()).contains("H1");
-            assertThat(urlCheck.getTitle()).contains("Title");
-            assertThat(urlCheck.getDescription()).contains("Content");
-        });
+            var responce = client.get("/urls/" + actualUrl.getId());
+            assertThat(responce.code()).isEqualTo(200);
+            assertThat(responce.body() != null);
+            assertThat(responce.body().string()).contains(url);
+            var urlCheck = UrlChecksRepository.findLatestChecks().get(actualUrl.getId());
+            var statusCode = urlCheck.getStatusCode();
+            var title = urlCheck.getTitle();
+            var h1 = urlCheck.getH1();
+            var description = urlCheck.getDescription();
+            assertThat(statusCode).isEqualTo(200);
+            assertThat(title).isEqualTo("Title");
+            assertThat(h1).isEqualTo("H1");
+            assertThat(description).isEqualTo("Content");
+        }));
     }
-
 }

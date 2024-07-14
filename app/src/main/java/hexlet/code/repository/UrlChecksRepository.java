@@ -3,6 +3,8 @@ package hexlet.code.repository;
 import hexlet.code.model.UrlCheck;
 import lombok.SneakyThrows;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
@@ -85,6 +87,26 @@ public class UrlChecksRepository extends BaseRepository {
 
         }
         return result;
+    }
+    public static Map<Long, UrlCheck> findLatestChecks() throws SQLException {
+        String sql = "SELECT DISTINCT ON (url_id) * from url_checks order by url_id DESC, id DESC";
+        try (var conn = dataSource.getConnection();
+             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+            var result = new HashMap<Long, UrlCheck>();
+            while (resultSet.next()) {
+                long urlId = resultSet.getLong("url_id");
+                int statusCode = resultSet.getInt("status_code");
+                String title = resultSet.getString("title");
+                String h1 = resultSet.getString("h1");
+                String description = resultSet.getString("description");
+                Timestamp createdAt = resultSet.getTimestamp("created_at");
+                UrlCheck urlCheck = new UrlCheck(statusCode, title, h1, description);
+                urlCheck.setCreatedAt(createdAt);
+                result.put(urlId, urlCheck);
+            }
+            return result;
+        }
     }
 
 //    @SneakyThrows
