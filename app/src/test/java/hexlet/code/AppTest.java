@@ -5,7 +5,6 @@ package hexlet.code;
 
 import hexlet.code.model.Url;
 import hexlet.code.repository.UrlChecksRepository;
-//import hexlet.code.repository.UrlsRepository;
 import hexlet.code.repository.UrlsRepository;
 import io.javalin.Javalin;
 import io.javalin.testtools.JavalinTest;
@@ -22,8 +21,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
-//import java.sql.Timestamp;
-//import java.util.Date;
 
 class AppTest {
     private static Javalin app;
