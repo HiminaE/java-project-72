@@ -11,6 +11,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 @Getter
 @Setter
@@ -83,6 +85,24 @@ public class UrlsRepository extends BaseRepository {
             } else {
                 return Optional.empty();
             }
+        }
+    }
+    public static Optional<Url> findByName(String urlName) throws SQLException {
+        String sql = "SELECT * FROM urls WHERE name = ?";
+        try (var conn = dataSource.getConnection();
+             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+            preparedStatement.setString(1, urlName);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String name = resultSet.getString("name");
+                Timestamp createdAt = resultSet.getTimestamp("created_at");
+                long id = resultSet.getLong("id");
+                Url url = new Url(name);
+                url.setId(id);
+                url.setCreatedAt(createdAt);
+                return Optional.of(url);
+            }
+            return Optional.empty();
         }
     }
 }
