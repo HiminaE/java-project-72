@@ -87,27 +87,26 @@ public class UrlChecksRepository extends BaseRepository {
         return result;
     }
 
-    @SneakyThrows
-    public static Optional<UrlCheck> find(Long id) {
-        var sql = "SELECT * FROM url_checks WHERE id = ?";
-        try (var conn = dataSource.getConnection();
-             var stmt = conn.prepareStatement(sql)) {
-            stmt.setLong(1, id);
-            var resultSet = stmt.executeQuery();
-            if (resultSet.next()) {
-                Long urlId = resultSet.getLong("url_id");
-                int statusCode = resultSet.getInt("status_code");
-                String h1 = resultSet.getString("h1");
-                String title = resultSet.getString("title");
-                String description = resultSet.getString("description");
-                Timestamp createdAt = resultSet.getTimestamp("created_at");
-                UrlCheck url = new UrlCheck(id, statusCode, h1, title, description, urlId, createdAt);
-                url.setId(id);
-                return Optional.of(url);
-            }
-            return Optional.empty();
-        } catch (SQLException e) {
-            return Optional.empty();
-        }
-     }
+//    @SneakyThrows
+//    public static Optional<UrlCheck> find(Long id) throws SQLException {
+//        var sql = "SELECT * FROM url_checks WHERE id = ?";
+//        try (var conn = dataSource.getConnection();
+//             var stmt = conn.prepareStatement(sql)) {
+//            stmt.setLong(1, id);
+//            var resultSet = stmt.executeQuery();
+//            if (resultSet.next()) {
+//                Long urlId = resultSet.getLong("url_id");
+//                int statusCode = resultSet.getInt("status_code");
+//                String h1 = resultSet.getString("h1");
+//                String title = resultSet.getString("title");
+//                String description = resultSet.getString("description");
+//                Timestamp createdAt = resultSet.getTimestamp("created_at");
+//                UrlCheck url = new UrlCheck(id, statusCode, h1, title, description, urlId, createdAt);
+//                url.setId(id);
+//
+//                return Optional.of(url);
+//            }
+//            return Optional.empty();
+//        }
+//    }
 }

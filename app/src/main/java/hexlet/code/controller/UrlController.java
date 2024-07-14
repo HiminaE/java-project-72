@@ -49,7 +49,8 @@ public class UrlController {
             ctx.sessionAttribute("flash", "Страница уже существует");
             ctx.sessionAttribute("flash-type", "info");
         } else {
-            Url newUrl = new Url(normalizedUrl);UrlsRepository.save(newUrl);
+            Url newUrl = new Url(normalizedUrl);
+            UrlsRepository.save(newUrl);
             ctx.sessionAttribute("flash", "Страница успешно добавлена");
             ctx.sessionAttribute("flash-type", "success");
         }

@@ -117,16 +117,18 @@ class AppTest {
     @Test
     public void testUrlCheckInnerContent()  throws SQLException {
         var baseUrl = server.url("/").toString();
-        var actualUrl = new Url(baseUrl, new Timestamp(new Date().getTime()));
-        UrlsRepository.save(actualUrl);
         JavalinTest.test(app, (srv, client) -> {
-            var response = client.post("/urls/" + actualUrl.getId() + "/checks");
-            assertThat(response.code()).isEqualTo(200);
+            var requestBody = "url=" + baseUrl;
+            client.post("/urls", requestBody);
+            client.post("/urls/1/checks");
 
-            var urlCheck = UrlChecksRepository.find(actualUrl.getId()).orElseThrow();
+            var urlCheck = UrlChecksRepository.getUrlChecksByUrlId(1L).get(0);
+
+            assertThat(urlCheck.getStatusCode()).isEqualTo(200);
             assertThat(urlCheck.getH1()).contains("H1");
             assertThat(urlCheck.getTitle()).contains("Title");
             assertThat(urlCheck.getDescription()).contains("Content");
         });
     }
+
 }
