@@ -118,9 +118,8 @@ class AppTest {
     public void testUrlCheckInnerContent()  throws SQLException {
         var baseUrl = server.url("/").toString();
         JavalinTest.test(app, (srv, client) -> {
-            var requestBody = "url=" + baseUrl;
-            client.post("/urls", requestBody);
-            client.post("/urls/1/checks");
+            var actualUrl = UrlsRepository.getByName(baseUrl).orElse(null);
+            client.post("/urls/" + actualUrl.getId() + "/checks");
 
             var urlCheck = UrlChecksRepository.getUrlChecksByUrlId(1L).get(0);
 
