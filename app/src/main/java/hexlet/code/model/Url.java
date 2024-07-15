@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class Url {
     private Long id;
     private String name;
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
     public Url(String name, Timestamp createdAt) {
         this.name = name;
