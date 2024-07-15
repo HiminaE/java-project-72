@@ -99,7 +99,7 @@ public class UrlChecksRepository extends BaseRepository {
                 String title = resultSet.getString("title");
                 String h1 = resultSet.getString("h1");
                 String description = resultSet.getString("description");
-                Timestamp createdAt = resultSet.getLocalDate("created_at");
+                LocalDate createdAt = resultSet.getLocalDate("created_at");
                 UrlCheck urlCheck = new UrlCheck(statusCode, title, h1, description);
                 urlCheck.setCreatedAt(createdAt);
                 result.put(urlId, urlCheck);
