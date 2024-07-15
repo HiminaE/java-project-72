@@ -19,7 +19,7 @@ import java.sql.ResultSet;
 public class UrlsRepository extends BaseRepository {
     public static void save(Url url) throws SQLException {
         var sql = "INSERT INTO urls (name, created_at) VALUES (?, ?)";
-        var time = new Timestamp(System.currentTimeMillis());
+        var time = new LocalDate(System.currentTimeMillis());
         try (var conn = dataSource.getConnection();
              var prepareStmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             prepareStmt.setString(1, url.getName());
@@ -95,7 +95,7 @@ public class UrlsRepository extends BaseRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 String name = resultSet.getString("name");
-                Timestamp createdAt = resultSet.getLocalDate("created_at");
+                LocalDate createdAt = resultSet.getLocalDate("created_at");
                 long id = resultSet.getLong("id");
                 Url url = new Url(name);
                 url.setId(id);
