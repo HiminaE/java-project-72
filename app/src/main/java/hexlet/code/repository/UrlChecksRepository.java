@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +28,7 @@ public class UrlChecksRepository extends BaseRepository {
                         .description(resultSet.getString("description"))
                         .h1(resultSet.getString("h1"))
                         .title(resultSet.getString("title"))
-                        .createdAt(resultSet.getTimestamp("created_at"))
+                        .createdAt(resultSet.getLocalDate("created_at"))
                         .urlId(id)
                         .statusCode(resultSet.getInt("status_code"))
                         .build();
@@ -51,7 +51,7 @@ public class UrlChecksRepository extends BaseRepository {
             prepareStmt.setString(3, urlCheck.getH1());
             prepareStmt.setString(4, urlCheck.getDescription());
             prepareStmt.setLong(5, urlCheck.getUrlId());
-            prepareStmt.setTimestamp(6, time);
+            prepareStmt.setLocalDate(6, time);
             prepareStmt.executeUpdate();
 
             var generatedKeys = prepareStmt.getGeneratedKeys();
@@ -77,7 +77,7 @@ public class UrlChecksRepository extends BaseRepository {
             var resultSet = prepareStmt.executeQuery();
             while (resultSet.next()) {
                 var urlCheck = UrlCheck.builder()
-                        .createdAt(resultSet.getTimestamp("created_at"))
+                        .createdAt(resultSet.getLocalDate("created_at"))
                         .urlId(resultSet.getLong("url_id"))
                         .statusCode(resultSet.getInt("status_code"))
                         .build();
@@ -99,7 +99,7 @@ public class UrlChecksRepository extends BaseRepository {
                 String title = resultSet.getString("title");
                 String h1 = resultSet.getString("h1");
                 String description = resultSet.getString("description");
-                Timestamp createdAt = resultSet.getTimestamp("created_at");
+                Timestamp createdAt = resultSet.getLocalDate("created_at");
                 UrlCheck urlCheck = new UrlCheck(statusCode, title, h1, description);
                 urlCheck.setCreatedAt(createdAt);
                 result.put(urlId, urlCheck);
