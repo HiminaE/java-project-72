@@ -43,7 +43,7 @@ public class UrlChecksRepository extends BaseRepository {
     public static void save(UrlCheck urlCheck) throws SQLException {
         var sql = "INSERT INTO url_checks (status_code, title, h1, description, url_id, created_at) "
                 + "VALUES (?, ?, ?, ?, ?, ?)";
-        var time = new Timestamp(System.currentTimeMillis());
+        var time = new LocalDate(System.currentTimeMillis());
         try (var conn = dataSource.getConnection();
              var prepareStmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             prepareStmt.setInt(1, urlCheck.getStatusCode());
