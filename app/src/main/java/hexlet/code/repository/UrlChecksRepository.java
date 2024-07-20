@@ -28,7 +28,7 @@ public class UrlChecksRepository extends BaseRepository {
                         .description(resultSet.getString("description"))
                         .h1(resultSet.getString("h1"))
                         .title(resultSet.getString("title"))
-                        .createdAt(resultSet.Timestamp("created_at"))
+                        .createdAt(resultSet.getTimestamp("created_at"))
                         .urlId(id)
                         .statusCode(resultSet.getInt("status_code"))
                         .build();
