@@ -7,7 +7,7 @@ import lombok.SneakyThrows;
 
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,11 +19,11 @@ import java.sql.ResultSet;
 public class UrlsRepository extends BaseRepository {
     public static void save(Url url) throws SQLException {
         var sql = "INSERT INTO urls (name, created_at) VALUES (?, ?)";
-        var time = new LocalDate(System.currentTimeMillis());
+        var time = new Timestamp(System.currentTimeMillis());
         try (var conn = dataSource.getConnection();
              var prepareStmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             prepareStmt.setString(1, url.getName());
-            prepareStmt.setLocalDate(2, time);
+            prepareStmt.setTimestamp(2, time);
             prepareStmt.executeUpdate();
 
             var generatedKey = prepareStmt.getGeneratedKeys();
@@ -43,7 +43,7 @@ public class UrlsRepository extends BaseRepository {
             while (resultSet.next()) {
                 var id = resultSet.getLong("id");
                 var name = resultSet.getString("name");
-                var createdAt = resultSet.getLocalDate("created_at");
+                var createdAt = resultSet.getTimestamp("created_at");
                 var site = new Url(id, name, createdAt);
                 result.add(site);
             }
@@ -59,7 +59,7 @@ public class UrlsRepository extends BaseRepository {
             var resultSet = stmt.executeQuery();
             if (resultSet.next()) {
                 var name = resultSet.getString("name");
-                var createdAt = resultSet.getLocalDate("created_at");
+                var createdAt = resultSet.getTimestamp("created_at");
                 var site = new Url(id, name, createdAt);
                 return Optional.of(site);
             } else {
@@ -79,7 +79,7 @@ public class UrlsRepository extends BaseRepository {
             var resultSet = stmt.executeQuery();
             if (resultSet.next()) {
                 var id = resultSet.getLong("id");
-                var createdAt = resultSet.getLocalDate("created_at");
+                var createdAt = resultSet.getTimestamp("created_at");
                 var site = new Url(id, name, createdAt);
                 return Optional.of(site);
             } else {
@@ -95,7 +95,7 @@ public class UrlsRepository extends BaseRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 String name = resultSet.getString("name");
-                LocalDate createdAt = resultSet.getLocalDate("created_at");
+                Timestamp createdAt = resultSet.getTimestamp("created_at");
                 long id = resultSet.getLong("id");
                 Url url = new Url(name);
                 url.setId(id);
