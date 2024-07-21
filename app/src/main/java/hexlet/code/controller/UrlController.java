@@ -29,55 +29,55 @@ public class UrlController {
         page.setFlash(null);
     }
 
-//    public static void addUrl(Context ctx) throws SQLException {
-//        var uriParam = ctx.formParam("url");
-//        try {
-//            var site = new Url(parseUrl(uriParam));
-//            if (isExist(site)) {
-//                ctx.sessionAttribute("flash", "Страница уже существует");
-//                ctx.sessionAttribute("flashType", "error");
-//                ctx.redirect(Paths.rootPath());
-//            } else {
-//                UrlsRepository.save(site);
-//                ctx.sessionAttribute("flash", "Страница успешно добавлена");
-//                ctx.sessionAttribute("flashType", "success");
-//                ctx.redirect(Paths.urlsPath());
-//            }
-//        } catch (URISyntaxException | MalformedURLException | IllegalArgumentException e) {
-//            ctx.sessionAttribute("flash", "Некорректный URL");
-//            ctx.sessionAttribute("flashType", "error");
-//            ctx.redirect(Paths.rootPath());
-//        }
-//
-//    }
-
     public static void addUrl(Context ctx) throws SQLException {
-        var inputUrl = ctx.formParam("url");
-        URI parsedUrl;
+        var uriParam = ctx.formParam("url");
         try {
-            parsedUrl = new URI(inputUrl);
-        } catch (Exception e) {
+            var site = new Url(parseUrl(uriParam));
+            if (isExist(site)) {
+                ctx.sessionAttribute("flash", "Страница уже существует");
+                ctx.sessionAttribute("flashType", "error");
+                ctx.redirect(Paths.rootPath());
+            } else {
+                UrlsRepository.save(site);
+                ctx.sessionAttribute("flash", "Страница успешно добавлена");
+                ctx.sessionAttribute("flashType", "success");
+                ctx.redirect(Paths.urlsPath());
+            }
+        } catch (URISyntaxException | MalformedURLException | IllegalArgumentException e) {
             ctx.sessionAttribute("flash", "Некорректный URL");
-            ctx.sessionAttribute("flash-type", "danger");
+            ctx.sessionAttribute("flashType", "error");
             ctx.redirect(Paths.rootPath());
-            return;
         }
-        String normalizedUrl = String.format("%s://%s%s",
-            parsedUrl.getScheme(),
-            parsedUrl.getHost(),
-            parsedUrl.getPort() == -1 ? "" : ":" + parsedUrl.getPort()).toLowerCase();
-        Url url = UrlsRepository.findByName(normalizedUrl).orElse(null);
-        if (url != null) {
-            ctx.sessionAttribute("flash", "Страница уже существует");
-            ctx.sessionAttribute("flash-type", "info");
-        } else {
-            Url newUrl = new Url(normalizedUrl);
-            UrlsRepository.save(newUrl);
-            ctx.sessionAttribute("flash", "Страница успешно добавлена");
-            ctx.sessionAttribute("flash-type", "success");
-        }
-        ctx.redirect("/urls");
+
     }
+
+//    public static void addUrl(Context ctx) throws SQLException {
+//        var inputUrl = ctx.formParam("url");
+//        URI parsedUrl;
+//        try {
+//            parsedUrl = new URI(inputUrl);
+//        } catch (Exception e) {
+//            ctx.sessionAttribute("flash", "Некорректный URL");
+//            ctx.sessionAttribute("flash-type", "danger");
+//            ctx.redirect(Paths.rootPath());
+//            return;
+//        }
+//        String normalizedUrl = String.format("%s://%s%s",
+//            parsedUrl.getScheme(),
+//            parsedUrl.getHost(),
+//            parsedUrl.getPort() == -1 ? "" : ":" + parsedUrl.getPort()).toLowerCase();
+//        Url url = UrlsRepository.findByName(normalizedUrl).orElse(null);
+//        if (url != null) {
+//            ctx.sessionAttribute("flash", "Страница уже существует");
+//            ctx.sessionAttribute("flash-type", "info");
+//        } else {
+//            Url newUrl = new Url(normalizedUrl);
+//            UrlsRepository.save(newUrl);
+//            ctx.sessionAttribute("flash", "Страница успешно добавлена");
+//            ctx.sessionAttribute("flash-type", "success");
+//        }
+//        ctx.redirect("/urls");
+//    }
 
     public static void showAddedUrls(Context ctx) throws SQLException {
         var flash = ctx.consumeSessionAttribute("flash");
