@@ -8,6 +8,7 @@ import lombok.SneakyThrows;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,11 +20,14 @@ import java.sql.ResultSet;
 public class UrlsRepository extends BaseRepository {
     public static void save(Url url) throws SQLException {
         var sql = "INSERT INTO urls (name, created_at) VALUES (?, ?)";
-        var time = new Timestamp(System.currentTimeMillis());
+        //var time = new Timestamp(System.currentTimeMillis());
+        Instant instant = Instant.now();
+        url.setCreatedAt(instant);            
         try (var conn = dataSource.getConnection();
              var prepareStmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             prepareStmt.setString(1, url.getName());
-            prepareStmt.setTimestamp(2, time);
+            //prepareStmt.setTimestamp(2, time);
+            preparedStatement.setTimestamp(2, Timestamp.from(instant));
             prepareStmt.executeUpdate();
 
             var generatedKey = prepareStmt.getGeneratedKeys();
