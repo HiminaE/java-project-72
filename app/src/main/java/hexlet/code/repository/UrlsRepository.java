@@ -22,7 +22,7 @@ public class UrlsRepository extends BaseRepository {
         var sql = "INSERT INTO urls (name, created_at) VALUES (?, ?)";
         //var time = new Timestamp(System.currentTimeMillis());
         Instant time = Instant.now();
-        url.setCreatedAt(time);            
+        url.setCreatedAt(time);
         try (var conn = dataSource.getConnection();
              var prepareStmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             prepareStmt.setString(1, url.getName());
