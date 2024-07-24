@@ -29,7 +29,7 @@ public class UrlChecksRepository extends BaseRepository {
                         .description(resultSet.getString("description"))
                         .h1(resultSet.getString("h1"))
                         .title(resultSet.getString("title"))
-                        .createdAt(resultSet.getTimestamp("created_at"))
+                        .createdAt(resultSet.getTimestamp("created_at").toInstant())
                         .urlId(id)
                         .statusCode(resultSet.getInt("status_code"))
                         .build();
@@ -81,7 +81,7 @@ public class UrlChecksRepository extends BaseRepository {
             var resultSet = prepareStmt.executeQuery();
             while (resultSet.next()) {
                 var urlCheck = UrlCheck.builder()
-                        .createdAt(resultSet.getTimestamp("created_at"))
+                        .createdAt(resultSet.getTimestamp("created_at").toInstant())
                         .urlId(resultSet.getLong("url_id"))
                         .statusCode(resultSet.getInt("status_code"))
                         .build();
