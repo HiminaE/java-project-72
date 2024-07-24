@@ -21,13 +21,13 @@ public class UrlsRepository extends BaseRepository {
     public static void save(Url url) throws SQLException {
         var sql = "INSERT INTO urls (name, created_at) VALUES (?, ?)";
         //var time = new Timestamp(System.currentTimeMillis());
-        Instant instant = Instant.now();
-        url.setCreatedAt(instant);            
+        Instant time = Instant.now();
+        url.setCreatedAt(time);            
         try (var conn = dataSource.getConnection();
              var prepareStmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             prepareStmt.setString(1, url.getName());
             //prepareStmt.setTimestamp(2, time);
-            preparedStatement.setTimestamp(2, Timestamp.from(instant));
+            prepareStmt.setTimestamp(2, Timestamp.from(time));
             prepareStmt.executeUpdate();
 
             var generatedKey = prepareStmt.getGeneratedKeys();
@@ -99,7 +99,7 @@ public class UrlsRepository extends BaseRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 String name = resultSet.getString("name");
-                Timestamp createdAt = resultSet.getTimestamp("created_at").toInstant();
+                var createdAt = resultSet.getTimestamp("created_at").toInstant();
                 long id = resultSet.getLong("id");
                 Url url = new Url(name);
                 url.setId(id);
