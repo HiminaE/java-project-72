@@ -54,7 +54,7 @@ public class UrlChecksRepository extends BaseRepository {
             prepareStmt.setString(3, urlCheck.getH1());
             prepareStmt.setString(4, urlCheck.getDescription());
             prepareStmt.setLong(5, urlCheck.getUrlId());
-            preparedStatement.setTimestamp(6, Timestamp.from(instant));       
+            preparedStmt.setTimestamp(6, Timestamp.from(instant));       
             //prepareStmt.setTimestamp(6, time);
             prepareStmt.executeUpdate();
 
@@ -94,7 +94,7 @@ public class UrlChecksRepository extends BaseRepository {
     public static Map<Long, UrlCheck> findLatestChecks() throws SQLException {
         String sql = "SELECT DISTINCT ON (url_id) * from url_checks order by url_id DESC, id DESC";
         try (var conn = dataSource.getConnection();
-             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+             var prepareStmt = conn.prepareStatement(sql)) {
             ResultSet resultSet = preparedStatement.executeQuery();
             var result = new HashMap<Long, UrlCheck>();
             while (resultSet.next()) {
