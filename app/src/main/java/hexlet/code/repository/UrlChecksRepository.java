@@ -45,8 +45,8 @@ public class UrlChecksRepository extends BaseRepository {
         var sql = "INSERT INTO url_checks (status_code, title, h1, description, url_id, created_at) "
                 + "VALUES (?, ?, ?, ?, ?, ?)";
         //var time = new Timestamp(System.currentTimeMillis());
-        Instant instant = Instant.now();
-        urlCheck.setCreatedAt(instant);
+        Instant time = Instant.now();
+        urlCheck.setCreatedAt(time);
         try (var conn = dataSource.getConnection();
              var prepareStmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             prepareStmt.setInt(1, urlCheck.getStatusCode());
@@ -54,7 +54,7 @@ public class UrlChecksRepository extends BaseRepository {
             prepareStmt.setString(3, urlCheck.getH1());
             prepareStmt.setString(4, urlCheck.getDescription());
             prepareStmt.setLong(5, urlCheck.getUrlId());
-            preparedStmt.setTimestamp(6, Timestamp.from(instant));       
+            prepareStmt.setTimestamp(6, Timestamp.from(time));       
             //prepareStmt.setTimestamp(6, time);
             prepareStmt.executeUpdate();
 
@@ -95,7 +95,7 @@ public class UrlChecksRepository extends BaseRepository {
         String sql = "SELECT DISTINCT ON (url_id) * from url_checks order by url_id DESC, id DESC";
         try (var conn = dataSource.getConnection();
              var prepareStmt = conn.prepareStatement(sql)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = prepareStatement.executeQuery();
             var result = new HashMap<Long, UrlCheck>();
             while (resultSet.next()) {
                 long urlId = resultSet.getLong("url_id");
