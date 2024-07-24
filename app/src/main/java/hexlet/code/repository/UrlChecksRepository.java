@@ -54,7 +54,7 @@ public class UrlChecksRepository extends BaseRepository {
             prepareStmt.setString(3, urlCheck.getH1());
             prepareStmt.setString(4, urlCheck.getDescription());
             prepareStmt.setLong(5, urlCheck.getUrlId());
-            prepareStmt.setTimestamp(6, Timestamp.from(time));       
+            prepareStmt.setTimestamp(6, Timestamp.from(time));
             //prepareStmt.setTimestamp(6, time);
             prepareStmt.executeUpdate();
 
