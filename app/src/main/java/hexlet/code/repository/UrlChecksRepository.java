@@ -3,7 +3,7 @@ package hexlet.code.repository;
 import hexlet.code.model.UrlCheck;
 import lombok.SneakyThrows;
 
-import java.sql.PreparedStatement;
+//import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
