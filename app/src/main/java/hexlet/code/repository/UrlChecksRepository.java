@@ -105,7 +105,8 @@ public class UrlChecksRepository extends BaseRepository {
                 String description = resultSet.getString("description");
                 Timestamp createdAt = resultSet.getTimestamp("created_at");
                 UrlCheck urlCheck = new UrlCheck(statusCode, title, h1, description);
-                urlCheck.setCreatedAt(createdAt);
+                //urlCheck.setCreatedAt(createdAt);
+                urlCheck.setCreatedAt(createdAt.toInstant());
                 result.put(urlId, urlCheck);
             }
             return result;
