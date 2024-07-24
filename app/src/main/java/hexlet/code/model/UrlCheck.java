@@ -21,7 +21,7 @@ public class UrlCheck {
     private String h1;
     private String description;
     private Long urlId;
-    private LocalDate createdAt = timestamp.toLocalDateTime().toLocalDate();
+    private LocalDate createdAt = createdAt.toLocalDateTime().toLocalDate();
 
     public UrlCheck(int statusCode, String title, String h1, String description) {
         this.statusCode = statusCode;
