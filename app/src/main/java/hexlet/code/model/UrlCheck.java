@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.Builder;
 
-import java.time.LocalDate;
+import java.time.Instant;
 
 @Getter
 @Setter
@@ -21,7 +21,7 @@ public class UrlCheck {
     private String h1;
     private String description;
     private Long urlId;
-    import java.time.Instant;
+    private Instant createdAt;
 
     public UrlCheck(int statusCode, String title, String h1, String description) {
         this.statusCode = statusCode;
