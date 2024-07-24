@@ -95,7 +95,7 @@ public class UrlChecksRepository extends BaseRepository {
         String sql = "SELECT DISTINCT ON (url_id) * from url_checks order by url_id DESC, id DESC";
         try (var conn = dataSource.getConnection();
              var prepareStmt = conn.prepareStatement(sql)) {
-            ResultSet resultSet = prepareStatement.executeQuery();
+            ResultSet resultSet = prepareStmt.executeQuery();
             var result = new HashMap<Long, UrlCheck>();
             while (resultSet.next()) {
                 long urlId = resultSet.getLong("url_id");
