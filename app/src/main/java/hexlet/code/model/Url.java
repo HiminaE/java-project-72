@@ -14,7 +14,7 @@ public class Url {
     private String name;
     private Instant createdAt;
     
-    public Url(String name, Timestamp createdAt) {
+    public Url(String name, Instant createdAt) {
         this.name = name;
         this.createdAt = createdAt;        
     }
