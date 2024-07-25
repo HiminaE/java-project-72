@@ -10,6 +10,7 @@ import hexlet.code.repository.UrlChecksRepository;
 import hexlet.code.utils.Paths;
 import io.javalin.http.Context;
 import io.javalin.http.NotFoundResponse;
+import java.net.URI;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -51,14 +52,16 @@ public class UrlController {
 // }
     public static void addUrl(Context ctx) throws SQLException {
         var inputUrl = ctx.formParam("url");
+        URI site; 
         try {
-            var site = new Url(parseUrl(inputUrl));
+            site = new URI(inputUrl);           
         } catch (Exception e) {
             ctx.sessionAttribute("flash", "Некорректный URL");
             ctx.sessionAttribute("flash-type", "danger");
             ctx.redirect(Paths.rootPath());
             return;
         }
+        site = new Url(parseUrl(inputUrl));
         if (isExist(site)) {
              ctx.sessionAttribute("flash", "Страница уже существует");
              ctx.sessionAttribute("flashType", "error");
