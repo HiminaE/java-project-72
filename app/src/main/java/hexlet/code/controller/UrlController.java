@@ -10,7 +10,7 @@ import hexlet.code.repository.UrlChecksRepository;
 import hexlet.code.utils.Paths;
 import io.javalin.http.Context;
 import io.javalin.http.NotFoundResponse;
-import java.net.URI;
+//import java.net.URI;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -52,7 +52,7 @@ public class UrlController {
 // }
     public static void addUrl(Context ctx) throws SQLException {
         var inputUrl = ctx.formParam("url");
-        URI site; 
+        Url site; 
         try {
             site = new URI(inputUrl);           
         } catch (Exception e) {
