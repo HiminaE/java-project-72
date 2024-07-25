@@ -52,9 +52,9 @@ public class UrlController {
 // }
     public static void addUrl(Context ctx) throws SQLException {
         var inputUrl = ctx.formParam("url");
-        Url site; 
+        Url site;
         try {
-             site = new Url(parseUrl(inputUrl));
+            site = new Url(parseUrl(inputUrl));
         } catch (Exception e) {
             ctx.sessionAttribute("flash", "Некорректный URL");
             ctx.sessionAttribute("flash-type", "danger");
