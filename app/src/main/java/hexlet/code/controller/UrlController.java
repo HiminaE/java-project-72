@@ -61,7 +61,7 @@ public class UrlController {
             ctx.redirect(Paths.rootPath());
             return;
         }
-        site = new Url(parseUrl(inputUrl));
+        //site = new Url(parseUrl(inputUrl));
         if (isExist(site)) {
              ctx.sessionAttribute("flash", "Страница уже существует");
              ctx.sessionAttribute("flashType", "error");
