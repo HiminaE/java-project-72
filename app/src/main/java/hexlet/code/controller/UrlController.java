@@ -54,14 +54,13 @@ public class UrlController {
         var inputUrl = ctx.formParam("url");
         Url site; 
         try {
-            site = new URI(inputUrl);           
+             site = new Url(parseUrl(inputUrl));
         } catch (Exception e) {
             ctx.sessionAttribute("flash", "Некорректный URL");
             ctx.sessionAttribute("flash-type", "danger");
             ctx.redirect(Paths.rootPath());
             return;
         }
-        //site = new Url(parseUrl(inputUrl));
         if (isExist(site)) {
              ctx.sessionAttribute("flash", "Страница уже существует");
              ctx.sessionAttribute("flashType", "error");
