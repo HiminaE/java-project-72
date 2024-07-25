@@ -52,19 +52,19 @@ public class UrlController {
     public static void addUrl(Context ctx) throws SQLException {
         var inputUrl = ctx.formParam("url");
         try {
-            var url = new Url(parseUrl(inputUrl));
+            var site = new Url(parseUrl(inputUrl));
         } catch (Exception e) {
             ctx.sessionAttribute("flash", "Некорректный URL");
             ctx.sessionAttribute("flash-type", "danger");
             ctx.redirect(Paths.rootPath());
             return;
         }
-        if (isExist(url)) {
+        if (isExist(site)) {
              ctx.sessionAttribute("flash", "Страница уже существует");
              ctx.sessionAttribute("flashType", "error");
              ctx.redirect(Paths.rootPath());
          } else {
-             UrlsRepository.save(url);
+             UrlsRepository.save(site);
              ctx.sessionAttribute("flash", "Страница успешно добавлена");
              ctx.sessionAttribute("flashType", "success");
              ctx.redirect(Paths.urlsPath());
