@@ -17,5 +17,5 @@ public class TimeUtils {
                 .toLocalDateTime()
                 .format(DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm:ss"));
         //return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(instant);
-    }   
+    }
 }
