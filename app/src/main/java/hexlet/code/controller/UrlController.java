@@ -59,12 +59,12 @@ public class UrlController {
             ctx.redirect(Paths.rootPath());
             return;
         }
-        if (isExist(inputUrl)) {
+        if (isExist(url)) {
              ctx.sessionAttribute("flash", "Страница уже существует");
              ctx.sessionAttribute("flashType", "error");
              ctx.redirect(Paths.rootPath());
          } else {
-             UrlsRepository.save(inputUrl);
+             UrlsRepository.save(url);
              ctx.sessionAttribute("flash", "Страница успешно добавлена");
              ctx.sessionAttribute("flashType", "success");
              ctx.redirect(Paths.urlsPath());
