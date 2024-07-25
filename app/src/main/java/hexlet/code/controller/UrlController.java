@@ -62,15 +62,15 @@ public class UrlController {
             return;
         }
         if (isExist(site)) {
-             ctx.sessionAttribute("flash", "Страница уже существует");
-             ctx.sessionAttribute("flashType", "error");
-             ctx.redirect(Paths.rootPath());
-         } else {
-             UrlsRepository.save(site);
-             ctx.sessionAttribute("flash", "Страница успешно добавлена");
-             ctx.sessionAttribute("flashType", "success");
-             ctx.redirect(Paths.urlsPath());
-         }
+            ctx.sessionAttribute("flash", "Страница уже существует");
+            ctx.sessionAttribute("flashType", "error");
+            ctx.redirect(Paths.rootPath());
+        } else {
+            UrlsRepository.save(site);
+            ctx.sessionAttribute("flash", "Страница успешно добавлена");
+            ctx.sessionAttribute("flashType", "success");
+            ctx.redirect(Paths.urlsPath());
+        }
     }
 
     public static void showAddedUrls(Context ctx) throws SQLException {
