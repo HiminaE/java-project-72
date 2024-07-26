@@ -20,13 +20,11 @@ import java.sql.ResultSet;
 public class UrlsRepository extends BaseRepository {
     public static void save(Url url) throws SQLException {
         var sql = "INSERT INTO urls (name, created_at) VALUES (?, ?)";
-        //var time = new Timestamp(System.currentTimeMillis());
         Instant time = Instant.now();
         url.setCreatedAt(time);
         try (var conn = dataSource.getConnection();
              var prepareStmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             prepareStmt.setString(1, url.getName());
-            //prepareStmt.setTimestamp(2, time);
             prepareStmt.setTimestamp(2, Timestamp.from(time));
             prepareStmt.executeUpdate();
 

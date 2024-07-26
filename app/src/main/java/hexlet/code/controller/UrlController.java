@@ -10,7 +10,6 @@ import hexlet.code.repository.UrlChecksRepository;
 import hexlet.code.utils.Paths;
 import io.javalin.http.Context;
 import io.javalin.http.NotFoundResponse;
-//import java.net.URI;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -30,26 +29,6 @@ public class UrlController {
         page.setFlash(null);
     }
 
-// public static void addUrl(Context ctx) throws SQLException {
-//     var uriParam = ctx.formParam("url");
-//     try {
-//         var site = new Url(parseUrl(uriParam));
-//         if (isExist(site)) {
-//             ctx.sessionAttribute("flash", "Страница уже существует");
-//             ctx.sessionAttribute("flashType", "error");
-//             ctx.redirect(Paths.rootPath());
-//         } else {
-//             UrlsRepository.save(site);
-//             ctx.sessionAttribute("flash", "Страница успешно добавлена");
-//             ctx.sessionAttribute("flashType", "success");
-//             ctx.redirect(Paths.urlsPath());
-//         }
-//     } catch (URISyntaxException | MalformedURLException | IllegalArgumentException e) {
-//         ctx.sessionAttribute("flash", "Некорректный URL");
-//         ctx.sessionAttribute("flashType", "error");
-//         ctx.redirect(Paths.rootPath());
-//     }
-// }
     public static void addUrl(Context ctx) throws SQLException {
         var inputUrl = ctx.formParam("url");
         Url site;
