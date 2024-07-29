@@ -121,10 +121,10 @@ class AppTest {
 
             var actualUrl = UrlsRepository.findByName(url).orElse(null);
             client.post("/urls/" + actualUrl.getId() + "/checks");
-            var responce = client.get("/urls/" + actualUrl.getId());
-            assertThat(responce.code()).isEqualTo(200);
-            assertThat(responce.body() != null);
-            assertThat(responce.body().string()).contains(url);
+            var response = client.get("/urls/" + actualUrl.getId());
+            assertThat(response.code()).isEqualTo(200);
+            assertThat(response.body() != null);
+            assertThat(response.body().string()).contains(url);
             var urlCheck = UrlChecksRepository.findLatestChecks().get(actualUrl.getId());
             var statusCode = urlCheck.getStatusCode();
             var title = urlCheck.getTitle();
